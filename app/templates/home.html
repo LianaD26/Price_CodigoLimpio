@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>BestPrice</title>
+		<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+		<link href="https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.css" rel="stylesheet">
+		<script src="https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js"></script>
+		<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+		<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
+
+		<style>
+			html, body { 
+				margin: 0; 
+				padding: 0; 
+				height: 100%;
+			}
+			#map { 
+				width: 100%;
+				flex-grow: 1;
+				height: 100%; 
+			}
+			#container {
+    			display: flex;
+				height: 100%;
+			}
+			#sidebar {
+				width: 400px;
+				flex-shrink: 0;
+				height: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="container">
+			<div id="sidebar">
+				<h1>Find your products</h1>
+				<h2>Search your location on the map:</h2>
+				<p>Longitud: <span id="longitud"></span></p>
+				<p>Latitud: <span id="latitud"></span></p>
+				<form action="products" method="post">
+					<h2>Search the product:</h2>
+					<label for="product">Product:</label><br>
+					<textarea id="product" name="product" style="width: 381px; height: 31px;" required></textarea><br><br>
+					<input type="submit" value="Search">
+				</form>
+			</div>
+			<div id="map"></div>
+		</div>
+
+	<script>
+		mapboxgl.accessToken = 'pk.eyJ1IjoibGlhMjYxOSIsImEiOiJjbHdzNXgxcG8wODl1MnFxOHFjZ2U1Y2FoIn0.UWQvOYc4hyxyX5JAATNE5g';
+			const map = new mapboxgl.Map({
+			container: 'map',
+			// estilo del mapa, zoom, latitud, longitud
+			style: 'mapbox://styles/mapbox/outdoors-v12',
+			zoom: 12,
+			center: [-75.569458, 6.227934],
+			projection: 'globe'
+			});
+
+			// buscador de la ubicacion ----
+			let selectedLocation = null;
+
+			// control de búsqueda
+			const geocoder = new MapboxGeocoder({
+				accessToken: mapboxgl.accessToken,
+				mapboxgl: mapboxgl
+			});
+			map.addControl(geocoder);
+
+			// recibe el evento 'result' del control de geocodificación
+			geocoder.on('result', function(event) {
+				selectedLocation = event.result.geometry.coordinates; // longitud, latitud
+				document.getElementById("longitud").innerText = selectedLocation[0];
+				document.getElementById("latitud").innerText = selectedLocation[1];
+			});
+
+			map.on('load', () => {
+				map.setFog({});
+			});
+	</script>
+	</body>
+</html>
