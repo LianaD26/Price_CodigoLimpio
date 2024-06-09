@@ -37,7 +37,7 @@ def save_page_html(driver, url, file_path):
 
 
 def main():
-    url = "https://domicilios.tiendasd1.com/search?name=agua"
+    url = "https://domicilios.tiendasd1.com/search?name=jugo"
     data_dir = "data"
     binary_location = "/usr/bin/firefox-developer-edition"
 
