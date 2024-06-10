@@ -4,14 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products</title>
+
+    <style>
+        html, body { 
+            margin: 0; 
+            padding: 0; 
+            height: 100%;
+            display: flex;
+        }
+        #container {
+            width: 400px;
+            flex-shrink: 0;
+            height: 100%;
+            padding: 20px;
+        }
+        .d1, .exito, .carulla {
+            width: 200px; 
+            height: 50px; 
+            padding: 10px 20px;
+            font-size: 16px; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            margin-bottom: 10px; /* Espacio entre botones */
+        }
+        .d1 {
+            background-color: #c41010;
+        }
+        .d1:hover {
+            background-color: #b50505;
+        }
+        .exito {
+            background-color: #e4d90b;
+        }
+        .exito:hover {
+            background-color: #d4ca00;
+        }
+        .carulla {
+            background-color: #4CAF50;
+        }
+        .carulla:hover {
+            background-color: #45a049;
+        }
+        #products {
+            flex-grow: 1;
+            background-color: #f0f0f0; /* Color de fondo para visualizar el espacio sobrante */
+            padding: 20px; /* Espacio interior */
+            width: 780px;
+            height: 100%;
+        }
+    </style>
+
 </head>
 <body>
-    <h1>Select your favourite product</h1>
-    <ul>
-        {% for product in data %}
-            <li>{{ product.name }} - {{ product.price }}</li>
-        {% endfor %}
-    </ul>
-    <a href="/home">Back to home</a>
+    <div id="container">
+        <h1>Select your favourite store</h1>
+        <form action="/products" method="post">
+            <input type="hidden" name="action" value="submit">
+            <button type="submit" name="store" value="action1" class="d1">D1</button><br><br>
+            <button type="submit" name="store" value="action2" class="exito">Éxito</button><br><br>
+            <button type="submit" name="store" value="action3" class="carulla">Carulla</button><br><br>
+        </form>
+        <a href="/home">Back to home</a>
+    </div>
+    <div id="products">
+        <h1>Select your favourite product</h1>
+    </div>
 </body>
 </html>

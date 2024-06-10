@@ -1,0 +1,14 @@
+from bs4 import BeautifulSoup
+
+def get_soup(file_path):
+    with open(file_path, 'r') as file:
+        html = file.read()
+
+    soup = BeautifulSoup(html, 'html.parser')
+    return soup
+
+def find_tags_with_class(soup, tag, class_name):
+    return soup.find(f'{tag}', class_=class_name)
+
+def findAll_tags_with_class(soup, tag, class_name):
+    return soup.find_all(f'{tag}', class_=class_name)
