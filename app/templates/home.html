@@ -36,9 +36,11 @@
 			<div id="sidebar">
 				<h1>Find your products</h1>
 				<h2>Search your location on the map:</h2>
-				<p>Longitud: <span id="longitud"></span></p>
-				<p>Latitud: <span id="latitud"></span></p>
 				<form action="products" method="post">
+					<input type="hidden" name="latitud" id="latitud_input">
+                	<input type="hidden" name="longitud" id="longitud_input">
+					<p>Longitud: <span id="longitud"></span></p>
+					<p>Latitud: <span id="latitud"></span></p>
 					<h2>Search the product:</h2>
 					<label for="product">Product:</label><br>
 					<textarea id="product" name="product" style="width: 381px; height: 31px;" required></textarea><br><br>
@@ -71,14 +73,24 @@
 
 			// recibe el evento 'result' del control de geocodificación
 			geocoder.on('result', function(event) {
-				selectedLocation = event.result.geometry.coordinates; // longitud, latitud
+				selectedLocation = event.result.geometry.coordinates;
 				document.getElementById("longitud").innerText = selectedLocation[0];
 				document.getElementById("latitud").innerText = selectedLocation[1];
+				document.getElementById("longitud_input").value = selectedLocation[0];
+				document.getElementById("latitud_input").value = selectedLocation[1];
 			});
 
 			map.on('load', () => {
 				map.setFog({});
 			});
+
+			document.getElementById('productForm').addEventListener('submit', function(event) {
+				if (!selectedLocation) {
+					event.preventDefault();
+					alert('Please select a location on the map first.');
+				}
+       		 });
+
 	</script>
 	</body>
 </html>

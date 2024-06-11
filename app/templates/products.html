@@ -18,7 +18,7 @@
             height: 100%;
             padding: 20px;
         }
-        .d1, .exito, .carulla {
+        .d1, .exito {
             width: 200px; 
             height: 50px; 
             padding: 10px 20px;
@@ -41,18 +41,24 @@
         .exito:hover {
             background-color: #d4ca00;
         }
-        .carulla {
-            background-color: #4CAF50;
-        }
-        .carulla:hover {
-            background-color: #45a049;
-        }
+
         #products {
             flex-grow: 1;
-            background-color: #f0f0f0; /* Color de fondo para visualizar el espacio sobrante */
             padding: 20px; /* Espacio interior */
-            width: 780px;
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Dos columnas de igual tamaño */
+            gap: 20px; /* Espacio entre elementos */
             height: 100%;
+        }
+        .product-item {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        img {
+            width: 100px;
+            height: 100px;
         }
     </style>
 
@@ -61,15 +67,35 @@
     <div id="container">
         <h1>Select your favourite store</h1>
         <form action="/products" method="post">
+            <input type="hidden" name="product" value="{{ product }}">
             <input type="hidden" name="action" value="submit">
             <button type="submit" name="store" value="action1" class="d1">D1</button><br><br>
             <button type="submit" name="store" value="action2" class="exito">Éxito</button><br><br>
-            <button type="submit" name="store" value="action3" class="carulla">Carulla</button><br><br>
         </form>
         <a href="/home">Back to home</a>
+
+        <h2>Ubicaciones D1</h2>
+        <ul>
+            {% if ubicaciones %}
+                {% for nombre, km in ubicaciones.items() %}
+                    <li>{{ nombre }}: {{ km }} km</li>
+                {% endfor %}
+            {% else %}
+                <li>No locations found</li>
+            {% endif %}
+        </ul>
     </div>
     <div id="products">
-        <h1>Select your favourite product</h1>
+        <div class="product-list">
+            <h1>Products</h1>
+            {% for item in products %}
+                <div class="product-item">
+                    <strong>Name:</strong> {{ item.name }} <br>
+                    <strong>Price:</strong> {{ item.price }} <br>
+                    <img src="{{ item.link }}" alt="{{ item.name }}">
+                </div>
+            {% endfor %}
+        </div>
     </div>
 </body>
 </html>
