@@ -74,14 +74,14 @@
         </form>
         <a href="/home">Back to home</a>
 
-        <h2>Ubicaciones D1</h2>
         <ul>
             {% if ubicaciones %}
+                <h2>Ubicaciones D1</h2>
                 {% for nombre, km in ubicaciones.items() %}
                     <li>{{ nombre }}: {{ km }} km</li>
                 {% endfor %}
             {% else %}
-                <li>No locations found</li>
+                <li>Products...</li>
             {% endif %}
         </ul>
     </div>
